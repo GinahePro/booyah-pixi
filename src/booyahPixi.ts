@@ -5,13 +5,13 @@ import * as chip from "booyah/dist/chip";
 import * as util from "booyah/dist/util";
 
 /** Returns the vector length of a a PIXI Point */
-export function magnitude(a: PIXI.IPointData): number {
+export function magnitude(a: PIXI.PointData): number {
   return Math.sqrt(a.x * a.x + a.y * a.y);
 }
 
 /** Returns a copy of the PIXI Point x that has a magnitude between min and max */
 export function clampMagnitude(
-  a: PIXI.IPointData,
+  a: PIXI.PointData,
   min: number,
   max: number
 ): PIXI.Point {
@@ -26,7 +26,7 @@ export function clampMagnitude(
 }
 
 /** Returns the distance between two PIXI Points */
-export function distance(a: PIXI.IPointData, b: PIXI.IPointData): number {
+export function distance(a: PIXI.PointData, b: PIXI.PointData): number {
   const x = a.x - b.x;
   const y = a.y - b.y;
   return Math.sqrt(x * x + y * y);
@@ -34,8 +34,8 @@ export function distance(a: PIXI.IPointData, b: PIXI.IPointData): number {
 
 /** Linear interpolation between points a and b, using the fraction p */
 export function lerpPoint(
-  a: PIXI.IPointData,
-  b: PIXI.IPointData,
+  a: PIXI.PointData,
+  b: PIXI.PointData,
   p: number
 ): PIXI.Point {
   const x = b.x - a.x;
@@ -44,7 +44,7 @@ export function lerpPoint(
 }
 
 /** Returns the sum of PIXI points */
-export function add(...points: PIXI.IPointData[]): PIXI.Point {
+export function add(...points: PIXI.PointData[]): PIXI.Point {
   const r = new PIXI.Point();
   for (const p of points) {
     r.x += p.x;
@@ -54,7 +54,7 @@ export function add(...points: PIXI.IPointData[]): PIXI.Point {
 }
 
 /** Returns the difference of PIXI points */
-export function subtract(...points: PIXI.IPointData[]): PIXI.IPointData {
+export function subtract(...points: PIXI.PointData[]): PIXI.PointData {
   const r = new PIXI.Point(points[0].x, points[0].y);
   for (let i = 1; i < points.length; i++) {
     r.x -= points[i].x;
@@ -64,27 +64,27 @@ export function subtract(...points: PIXI.IPointData[]): PIXI.IPointData {
 }
 
 /** Returns the multiplication of a PIXI point by a scalar */
-export function multiply(a: PIXI.IPointData, p: number): PIXI.Point {
+export function multiply(a: PIXI.PointData, p: number): PIXI.Point {
   return new PIXI.Point(a.x * p, a.y * p);
 }
 
 /** Returns the division of a PIXI point by a scalar */
-export function divide(a: PIXI.IPointData, p: number): PIXI.Point {
+export function divide(a: PIXI.PointData, p: number): PIXI.Point {
   return new PIXI.Point(a.x / p, a.y / p);
 }
 
 /** Returns a PIXI point with each element rounded down */
-export function floor(p: PIXI.IPointData): PIXI.Point {
+export function floor(p: PIXI.PointData): PIXI.Point {
   return new PIXI.Point(Math.floor(p.x), Math.floor(p.y));
 }
 
 /** Returns a PIXI point with each element rounded */
-export function round(p: PIXI.IPointData): PIXI.Point {
+export function round(p: PIXI.PointData): PIXI.Point {
   return new PIXI.Point(Math.round(p.x), Math.round(p.y));
 }
 
 /** Returns a PIXI point that has the minimum of each component */
-export function min(...points: PIXI.IPointData[]): PIXI.Point {
+export function min(...points: PIXI.PointData[]): PIXI.Point {
   const r = new PIXI.Point(Infinity, Infinity);
   for (const p of points) {
     r.x = Math.min(p.x, r.x);
@@ -94,7 +94,7 @@ export function min(...points: PIXI.IPointData[]): PIXI.Point {
 }
 
 /** Returns a PIXI point that has the maximum of each component */
-export function max(...points: PIXI.IPointData[]): PIXI.Point {
+export function max(...points: PIXI.PointData[]): PIXI.Point {
   const r = new PIXI.Point(-Infinity, -Infinity);
   for (const p of points) {
     r.x = Math.max(p.x, r.x);
@@ -105,15 +105,15 @@ export function max(...points: PIXI.IPointData[]): PIXI.Point {
 
 /** Returns true if the point p is between points min and max */
 export function inRectangle(
-  p: PIXI.IPointData,
-  min: PIXI.IPointData,
-  max: PIXI.IPointData
+  p: PIXI.PointData,
+  min: PIXI.PointData,
+  max: PIXI.PointData
 ) {
   return p.x >= min.x && p.x <= max.x && p.y >= min.y && p.y <= max.y;
 }
 
 /** Takes the mean of PIXI points */
-export function average(...points: PIXI.IPointData[]): PIXI.Point {
+export function average(...points: PIXI.PointData[]): PIXI.Point {
   let sum = new PIXI.Point();
   for (const point of points) sum = add(sum, point);
   return divide(sum, points.length);
@@ -124,8 +124,8 @@ export function average(...points: PIXI.IPointData[]): PIXI.Point {
  Will not "overshoot" b.
  */
 export function moveTowards(
-  a: PIXI.IPointData,
-  b: PIXI.IPointData,
+  a: PIXI.PointData,
+  b: PIXI.PointData,
   speed: number
 ): PIXI.Point {
   const d = distance(a, b);
@@ -136,8 +136,8 @@ export const moveTowardsPoint = moveTowards;
 
 /** Returns a random point between a amd b, with each component considered separately */
 export function randomPointInRange(
-  min: PIXI.IPointData,
-  max: PIXI.IPointData
+  min: PIXI.PointData,
+  max: PIXI.PointData
 ): PIXI.Point {
   return new PIXI.Point(
     util.randomInRange(min.x, max.x),
@@ -146,7 +146,7 @@ export function randomPointInRange(
 }
 
 /** Creates a vector pointing in the direction angle, with the length magnitude */
-export function vectorFromAngle(angle: number, magnitude = 1): PIXI.IPointData {
+export function vectorFromAngle(angle: number, magnitude = 1): PIXI.PointData {
   return new PIXI.Point(
     Math.cos(angle) * magnitude,
     Math.sin(angle) * magnitude
@@ -155,9 +155,9 @@ export function vectorFromAngle(angle: number, magnitude = 1): PIXI.IPointData {
 
 /* Returns true if point is within distance d of otherPoints */
 export function withinDistanceOfPoints(
-  point: PIXI.IPointData,
+  point: PIXI.PointData,
   d: number,
-  otherPoints: PIXI.IPointData[]
+  otherPoints: PIXI.PointData[]
 ): boolean {
   for (const otherPoint of otherPoints) {
     if (distance(point, otherPoint) <= d) return true;
@@ -170,7 +170,7 @@ interface PixiAppChipOptions {
   parentElement?: HTMLElement;
   canvas?: PIXI.ICanvas;
 
-  appOptions?: Partial<PIXI.IApplicationOptions & PIXI.IRendererOptions>;
+  appOptions?: Partial<PIXI.ApplicationOptions & PIXI.RendererOptions>;
 }
 
 export class PixiAppChip extends chip.Composite {
@@ -228,11 +228,11 @@ export class PixiAppChip extends chip.Composite {
 
 /** Options provided to all the value functions on resize */
 export interface DisplayObjectValueFunctionOptions<
-  DisplayObjectType extends PIXI.DisplayObject
+  DisplayObjectType extends PIXI.Container
 > {
   displayObject: DisplayObjectType;
   pixiAppChip: PixiAppChip;
-  renderSize: PIXI.IPointData;
+  renderSize: PIXI.PointData;
 }
 
 /**
@@ -240,28 +240,28 @@ export interface DisplayObjectValueFunctionOptions<
  * Points can be set with a single number.
  */
 export type DisplayObjectValueType<
-  DisplayObjectType extends PIXI.DisplayObject,
+  DisplayObjectType extends PIXI.Container,
   Property extends keyof DisplayObjectType
 > = DisplayObjectType[Property] extends PIXI.ObservablePoint
-  ? PIXI.IPointData | number
+  ? PIXI.PointData | number
   : DisplayObjectType[Property];
 
 export type DisplayObjectValueFunction<
-  DisplayObjectType extends PIXI.DisplayObject,
+  DisplayObjectType extends PIXI.Container,
   Property extends keyof DisplayObjectType
 > = (
   options: DisplayObjectValueFunctionOptions<DisplayObjectType>
 ) => DisplayObjectValueType<DisplayObjectType, Property>;
 
 export type DisplayObjectValueResolvable<
-  DisplayObjectType extends PIXI.DisplayObject,
+  DisplayObjectType extends PIXI.Container,
   Property extends keyof DisplayObjectType
 > =
   | DisplayObjectValueType<DisplayObjectType, Property>
   | DisplayObjectValueFunction<DisplayObjectType, Property>;
 
 export function isDisplayObjectValueFunction<
-  DisplayObjectType extends PIXI.DisplayObject,
+  DisplayObjectType extends PIXI.Container,
   Property extends keyof DisplayObjectType
 >(
   resolvable: DisplayObjectValueResolvable<DisplayObjectType, Property>
@@ -269,17 +269,16 @@ export function isDisplayObjectValueFunction<
   return typeof resolvable === "function";
 }
 
-export type DisplayObjectProperties<
-  DisplayObjectType extends PIXI.DisplayObject
-> = {
-  [Property in keyof DisplayObjectType]?: DisplayObjectValueResolvable<
-    DisplayObjectType,
-    Property
-  >;
-};
+export type DisplayObjectProperties<DisplayObjectType extends PIXI.Container> =
+  {
+    [Property in keyof DisplayObjectType]?: DisplayObjectValueResolvable<
+      DisplayObjectType,
+      Property
+    >;
+  };
 
 export class DisplayObjectChipOptions<
-  DisplayObjectType extends PIXI.DisplayObject
+  DisplayObjectType extends PIXI.Container
 > {
   properties?: DisplayObjectProperties<DisplayObjectType> = {};
   onResize?: (
@@ -289,7 +288,7 @@ export class DisplayObjectChipOptions<
 }
 
 export class DisplayObjectChip<
-  DisplayObjectType extends PIXI.DisplayObject
+  DisplayObjectType extends PIXI.Container
 > extends chip.ChipBase {
   private readonly _options: DisplayObjectChipOptions<DisplayObjectType>;
 
@@ -572,7 +571,8 @@ export class AnimatedSpriteChip extends chip.ChipBase {
   }
 
   _onTick() {
-    this._animatedSprite!.update(this._lastTickInfo.timeSinceLastTick);
+    // TODO fix this line below
+    // this._animatedSprite!.update(this._lastTickInfo.timeSinceLastTick);
   }
 
   protected _onPause(): void {
@@ -664,7 +664,7 @@ export class Loader extends chip.Composite {
 }
 
 function updateProperty<
-  DisplayObjectType extends PIXI.DisplayObject,
+  DisplayObjectType extends PIXI.Container,
   Property extends keyof DisplayObjectType
 >(
   displayObject: DisplayObjectType,
@@ -677,7 +677,7 @@ function updateProperty<
     } else {
       // Assume it's a point
       (displayObject[property] as PIXI.ObservablePoint).copyFrom(
-        value as PIXI.IPointData
+        value as PIXI.PointData
       );
     }
   } else {
